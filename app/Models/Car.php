@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Car extends Model
 {
     protected $fillable = ['client_id', 'car_id', 'type', 'registered', 'ownbrand', 'accidents'];
+    public $timestamps = false;
 
     public function client(): BelongsTo
     {

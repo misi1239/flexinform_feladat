@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Service extends Model
 {
     protected $fillable = ['client_id', 'car_id', 'log_number', 'event', 'event_time', 'document_id'];
+    public $timestamps = false;
 
     public function client(): BelongsTo
     {

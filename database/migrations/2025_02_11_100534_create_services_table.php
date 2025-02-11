@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('log_number');
             $table->unique(['client_id', 'car_id', 'log_number']);
             $table->string('event');
-            $table->timestamp('event_time');
+            $table->timestamp('event_time')->nullable();
             $table->string('document_id');
-            $table->timestamps();
         });
     }
 
