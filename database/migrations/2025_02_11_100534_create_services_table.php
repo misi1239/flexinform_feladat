@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
-            $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
+            $table->integer('id')->primary();
+            $table->integer('client_id');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->integer('car_id');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
             $table->string('log_number');
             $table->unique(['client_id', 'car_id', 'log_number']);
             $table->string('event');

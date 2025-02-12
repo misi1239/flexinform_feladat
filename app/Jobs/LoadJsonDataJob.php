@@ -57,10 +57,12 @@ class LoadJsonDataJob implements ShouldQueue
     {
         $mapping = [
             Client::class => [
+                'id' => 'id',
                 'name' => 'name',
                 'idcard' => 'card_number',
             ],
             Service::class => [
+                'id' => 'id',
                 'client_id' => 'client_id',
                 'car_id' => 'car_id',
                 'lognumber' => 'log_number',
@@ -69,6 +71,7 @@ class LoadJsonDataJob implements ShouldQueue
                 'document_id' => 'document_id',
             ],
             Car::class => [
+                'id' => 'id',
                 'client_id' => 'client_id',
                 'car_id' => 'car_id',
                 'type' => 'type',

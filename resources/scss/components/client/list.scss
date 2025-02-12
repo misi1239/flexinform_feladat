@@ -1,0 +1,19 @@
+$primary-color-start: rgba(126, 64, 246, 1);
+$primary-color-end: rgba(80, 139, 252, 1);
+$mask-bg: rgba(24, 24, 16, 0.2);
+$border-color: rgba(255, 255, 255, 0.05);
+$shadow-color: rgba(46, 54, 68, 0.03);
+
+.gradient-custom {
+    background: $primary-color-start;
+    background: linear-gradient(to right, $primary-color-start, $primary-color-end);
+}
+
+.mask-custom {
+    background: $mask-bg;
+    border-radius: 2em;
+    backdrop-filter: blur(25px);
+    border: 2px solid $border-color;
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px $shadow-color;
+}

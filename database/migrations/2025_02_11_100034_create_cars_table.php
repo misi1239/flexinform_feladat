@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
-            $table->string('car_id');
+            $table->integer('id')->primary();
+            $table->integer('client_id');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->integer('car_id');
             $table->string('type');
             $table->timestamp('registered');
             $table->boolean('ownbrand');

@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static find(int $clientId)
+ */
 class Client extends Model
 {
-    protected $fillable = ['name', 'card_number'];
+    protected $fillable = ['id', 'name', 'card_number'];
     public $timestamps = false;
 
     public function cars(): HasMany
