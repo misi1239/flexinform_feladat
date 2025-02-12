@@ -1,0 +1,64 @@
+$primary-color: #008B62;
+$primary-shadow: #00593E;
+$background-color: #E7FFFF;
+$text-color: #444;
+$button-bg: #222;
+$button-hover: #ddd;
+
+html, body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: sans-serif;
+    background-color: $background-color;
+}
+
+h1, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.section {
+    padding: 4rem 2rem;
+
+    .error {
+        font-size: 150px;
+        color: $primary-color;
+        text-shadow:
+            1px 1px 1px $primary-shadow,
+            2px 2px 1px $primary-shadow,
+            3px 3px 1px $primary-shadow,
+            4px 4px 1px $primary-shadow,
+            5px 5px 1px $primary-shadow,
+            6px 6px 1px $primary-shadow,
+            7px 7px 1px $primary-shadow,
+            8px 8px 1px $primary-shadow,
+            25px 25px 8px rgba(0,0,0, 0.2);
+    }
+}
+
+.page {
+    margin: 2rem 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-color;
+}
+
+.back-home {
+    display: inline-block;
+    border: 2px solid $button-bg;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.75rem 1rem 0.6rem;
+    transition: all 0.2s linear;
+    box-shadow: 0 15px 15px -11px rgba(0,0,0, 0.4);
+    background: $button-bg;
+    border-radius: 6px;
+
+    &:hover {
+        background: $button-bg;
+        color: $button-hover;
+    }
+}
