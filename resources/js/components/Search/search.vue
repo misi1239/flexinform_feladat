@@ -28,7 +28,7 @@ const search = async () => {
 
     const formData = new FormData();
     formData.append("name", customerName.value);
-    formData.append("card_number", cardNumber.value);
+    formData.append("idcard", cardNumber.value);
 
     try {
         const response = await axios.post("/api/client-search", formData, {

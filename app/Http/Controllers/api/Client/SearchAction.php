@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchClientRequest;
+use App\Http\Resources\SearchResource;
 use App\Models\Client;
 use Illuminate\Http\JsonResponse;
 
@@ -22,8 +23,8 @@ class SearchAction extends Controller
             }
         }
 
-        if ($request->filled('card_number')) {
-            $query->where('card_number', $request->card_number);
+        if ($request->filled('idcard')) {
+            $query->where('card_number', $request->idcard);
         }
 
         $clients = $query->get();
@@ -33,15 +34,7 @@ class SearchAction extends Controller
         }
 
         return response()->json([
-            'clients' => $clients->map(function ($client) {
-                return [
-                    'id' => $client->id,
-                    'name' => $client->name,
-                    'card_number' => $client->card_number,
-                    'car_count' => $client->cars()->count(),
-                    'service_count' => $client->services()->count(),
-                ];
-            }),
+            'clients' => SearchResource::collection($clients),
         ]);
     }
 }

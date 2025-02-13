@@ -125,7 +125,7 @@ onMounted(async () => {
                                         <tr v-for="client in searchClients" :key="client.id">
                                             <td>{{ client.id }}</td>
                                             <td>{{ client.name }}</td>
-                                            <td>{{ client.card_number }}</td>
+                                            <td>{{ client.idcard }}</td>
                                             <td>{{ client.car_count }}</td>
                                             <td>{{ client.service_count }}</td>
                                         </tr>
