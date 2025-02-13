@@ -18,7 +18,7 @@ class SearchAction extends Controller
 
             if ($clients->count() > 1) {
                 return response()->json([
-                    'error' => 'Túl sok találat van az ügyfél név alapján! Kérlek pontosítsd a keresést.'
+                    'error' => 'There are too many results based on customer name! Please refine your search.'
                 ], 422);
             }
         }
@@ -30,7 +30,7 @@ class SearchAction extends Controller
         $clients = $query->get();
 
         if ($clients->isEmpty()) {
-            return response()->json(['error' => 'Nincs találat a megadott adatokkal!'], 404);
+            return response()->json(['error' => 'No results with the specified data!'], 404);
         }
 
         return response()->json([
