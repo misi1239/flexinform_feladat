@@ -1,0 +1,44 @@
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$primary-active: #00408d;
+$border-radius: 5px;
+$padding: 10px;
+$font-size: 16px;
+$border-color: #ccc;
+
+.search-container {
+    margin: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: $padding;
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    font-size: $font-size;
+}
+
+.btn {
+    padding: $padding 20px;
+    border-radius: $border-radius;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+        background-color: $primary-hover;
+        transform: scale(1.05);
+    }
+
+    &:active {
+        background-color: $primary-active;
+        transform: scale(1);
+    }
+}

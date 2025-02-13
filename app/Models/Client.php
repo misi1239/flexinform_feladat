@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static find(int $clientId)
+ * @method static where(string $string, string $string1, string $string2)
  */
 class Client extends Model
 {
