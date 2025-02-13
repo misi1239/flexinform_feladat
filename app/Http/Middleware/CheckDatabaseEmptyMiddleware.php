@@ -8,9 +8,8 @@ use App\Models\Service;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
 
 class CheckDatabaseEmptyMiddleware
 {
@@ -19,12 +18,8 @@ class CheckDatabaseEmptyMiddleware
      *
      * @param Closure(Request): (Response) $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        try {
-            if (Cache::has('db_loading_in_progress') && Cache::get('db_loading_in_progress')) {
-                return $next($request);
-            }
 
             $this->loadDataIfEmpty(Client::class, 'clients.json', [
                 'id' => 'id',
@@ -51,10 +46,6 @@ class CheckDatabaseEmptyMiddleware
                 'eventtime' => 'event_time',
                 'document_id' => 'document_id',
             ]);
-        } catch (\Exception $e) {
-            Log::error('Error loading data: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while loading data.'], 500);
-        }
 
         return $next($request);
     }
@@ -63,19 +54,36 @@ class CheckDatabaseEmptyMiddleware
     {
         if ($model::count() === 0) {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
             try {
+                DB::beginTransaction();
+
                 $data = json_decode(file_get_contents(database_path('json/' . $fileName)), true);
                 if ($data === null) {
-                    throw new \Exception('Failed to decode JSON data from ' . $fileName);
+                    throw new \Exception("Failed to decode JSON data from file: {$fileName}");
                 }
 
-                foreach ($data as $item) {
-                    $model::create($this->mapFields($item, $mapping));
+                foreach ($data as $index => $item) {
+                    $mappedData = $this->mapFields($item, $mapping);
+                    try {
+                        $model::create($mappedData);
+                    } catch (\Exception $e) {
+                        throw new \Exception(
+                            "Error inserting data into model: {$model} (File: {$fileName}, Index: {$index}) - " .
+                            json_encode($mappedData) .
+                            " | Error: " . $e->getMessage()
+                        );
+                    }
                 }
+
+                DB::commit();
             } catch (\Exception $e) {
-                Log::error('Error loading data into model ' . $model . ': ' . $e->getMessage());
+                DB::rollBack();
+                Log::error("Database load failed for model: {$model}, file: {$fileName}. Error: " . $e->getMessage());
+                throw new \Exception("Failed to load data for {$model}. Error: " . $e->getMessage());
+            } finally {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1');
             }
-            DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
     }
 
